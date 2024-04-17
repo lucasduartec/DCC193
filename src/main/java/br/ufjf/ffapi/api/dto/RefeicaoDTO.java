@@ -1,6 +1,6 @@
 package br.ufjf.ffapi.api.dto;
 
-import br.ufjf.ffapi.model.entity.;
+import br.ufjf.ffapi.model.entity.Refeicao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class RefeicaoDTO {
         ModelMapper modelMapper = new ModelMapper();
         RefeicaoDTO dto = modelMapper.map(refeicao, RefeicaoDTO.class);
         dto.nome = refeicao.getNome();
-        dto.horario = refeicao.horario();
+        dto.horario = refeicao.getHorario();
         return dto;
     }
 }

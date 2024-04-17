@@ -1,6 +1,6 @@
 package br.ufjf.ffapi.api.dto;
 
-import br.ufjf.ffapi.model.entity.;
+import br.ufjf.ffapi.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +17,9 @@ public class UsuarioDTO {
 
     public static UsuarioDTO create(Usuario usuario){
         ModelMapper modelMapper = new ModelMapper();
-        UsuarioDTO dto = modelMapper.map(pessoa, UsuarioDTO.class);
-        dto.username = pessoa.getUsername();
-        dto.password = pessoa.getPassword();
+        UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
+        dto.username = usuario.getUsername();
+        dto.password = usuario.getPassword();
         return dto;
     }
 }

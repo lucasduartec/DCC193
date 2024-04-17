@@ -1,6 +1,6 @@
 package br.ufjf.ffapi.api.dto;
 
-import br.ufjf.ffapi.model.entity.;
+import br.ufjf.ffapi.model.entity.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Porcao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private int quantidade;
     @OneToOne
