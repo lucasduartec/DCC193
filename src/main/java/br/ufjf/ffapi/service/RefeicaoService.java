@@ -40,9 +40,9 @@ public class RefeicaoService {
 
     public void validar(Refeicao refeicao) {
         if (refeicao.getNome() == null || refeicao.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Nome inválida");
+            throw new RegraNegocioException("Nome inválido");
         }
-        if (refeicao.getNome() == null || refeicao.getNome().trim().equals("")) {
+        if (refeicao.getHorario() == null || refeicao.getHorario().trim().equals("")) {
             throw new RegraNegocioException("Horário inválido");
         }
         if (refeicao.getPorcao() == null || refeicao.getPorcao().getId() == null || refeicao.getPorcao().getId() == 0) {

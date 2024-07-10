@@ -42,7 +42,7 @@ public class PlanoService {
         if (plano.getNome() == null || plano.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
-        if (plano.getNome() == null || plano.getNome().trim().equals("")) {
+        if (plano.getDescricao() == null || plano.getDescricao().trim().equals("")) {
             throw new RegraNegocioException("Descrição inválida");
         }
         if (plano.getMetaCalorias() < 0 ) {

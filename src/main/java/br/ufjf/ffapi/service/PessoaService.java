@@ -46,10 +46,10 @@ public class PessoaService {
             throw new RegraNegocioException("Idade inválida");
         }
         if (pessoa.getPeso() <= 0 ) {
-            throw new RegraNegocioException("Nome inválido");
+            throw new RegraNegocioException("Peso inválido");
         }
         if (pessoa.getAltura() <= 0) {
-            throw new RegraNegocioException("Nome inválido");
+            throw new RegraNegocioException("Altura inválida");
         }        
     }
 }
