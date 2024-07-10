@@ -18,5 +18,5 @@ public class Refeicao {
     private String nome;
     private String horario;
     @ManyToOne
-    private Refeicao refeicao;
+    private Porcao porcao;
 }
