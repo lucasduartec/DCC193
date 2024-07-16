@@ -14,9 +14,9 @@ public class AlimentoDTO {
 
     private Long id;    
     private String nome;
-    private int proteinas;
-    private int carboidratos;
-    private int gorduras;
+    private float proteinas;
+    private float carboidratos;
+    private float gorduras;
 
     public static AlimentoDTO create(Alimento alimento){
         ModelMapper modelMapper = new ModelMapper();

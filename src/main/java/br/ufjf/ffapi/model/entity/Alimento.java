@@ -19,7 +19,7 @@ public class Alimento {
     private Long id;
 
     private String nome;
-    private int proteinas;
-    private int carboidratos;
-    private int gorduras;
+    private float proteinas;
+    private float carboidratos;
+    private float gorduras;
 }
