@@ -45,8 +45,5 @@ public class RefeicaoService {
         if (refeicao.getHorario() == null || refeicao.getHorario().trim().equals("")) {
             throw new RegraNegocioException("Horário inválido");
         }
-        if (refeicao.getPorcao() == null || refeicao.getPorcao().getId() == null || refeicao.getPorcao().getId() == 0) {
-            throw new RegraNegocioException("Porção inválida");
-        }   
     }
 }

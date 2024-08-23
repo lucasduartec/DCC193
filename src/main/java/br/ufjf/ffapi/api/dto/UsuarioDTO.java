@@ -12,14 +12,15 @@ import org.modelmapper.ModelMapper;
 public class UsuarioDTO {
 
     private Long id;
-    private String username;
-    private String password;
+    private String login;
+    private String cpf;
+    private String senha;
+    private boolean admin;
 
     public static UsuarioDTO create(Usuario usuario){
         ModelMapper modelMapper = new ModelMapper();
         UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
-        dto.username = usuario.getUsername();
-        dto.password = usuario.getPassword();
+
         return dto;
     }
 }
