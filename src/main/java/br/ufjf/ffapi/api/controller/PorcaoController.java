@@ -1,5 +1,8 @@
 package br.ufjf.ffapi.api.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
@@ -40,6 +43,11 @@ public class PorcaoController {
         return ResponseEntity.ok(porcoes.stream().map(PorcaoDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de uma porção")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Porção encontrada"),
+            @ApiResponse(code = 404, message = "Porção não encontrada")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Porcao> porcao = service.getPorcaoById(id);
@@ -50,6 +58,11 @@ public class PorcaoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova porção")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Porção salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a porção")
+    })
     public ResponseEntity post(@RequestBody PorcaoDTO dto) {
         try {
             Porcao porcao = converter(dto);
@@ -61,6 +74,11 @@ public class PorcaoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera uma porção")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Porção alterada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar a porção")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PorcaoDTO dto) {
         if (!service.getPorcaoById(id).isPresent()) {
             return new ResponseEntity("Porção não encontrada", HttpStatus.NOT_FOUND);
@@ -76,6 +94,11 @@ public class PorcaoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma porção")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Porção excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a porção")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Porcao> porcao = service.getPorcaoById(id);
         if (!porcao.isPresent()) {

@@ -1,5 +1,8 @@
 package br.ufjf.ffapi.api.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
@@ -39,6 +42,11 @@ public class PlanoController {
         return ResponseEntity.ok(planos.stream().map(PlanoDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de um plano")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Plano encontrado"),
+            @ApiResponse(code = 404, message = "Plano não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
@@ -49,6 +57,11 @@ public class PlanoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo plano")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Plano salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o plano")
+    })
     public ResponseEntity post(@RequestBody PlanoDTO dto) {
         try {
             Plano plano = converter(dto);
@@ -60,6 +73,11 @@ public class PlanoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera um plano")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Plano alterado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar o plano")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PlanoDTO dto) {
         if (!service.getPlanoById(id).isPresent()) {
             return new ResponseEntity("Plano não encontrado", HttpStatus.NOT_FOUND);
@@ -75,6 +93,11 @@ public class PlanoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um plano")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Plano excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o plano")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
         if (!plano.isPresent()) {

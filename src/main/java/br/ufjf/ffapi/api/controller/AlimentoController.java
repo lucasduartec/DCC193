@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.*;
 
 import br.ufjf.ffapi.model.entity.Alimento;
 import br.ufjf.ffapi.api.dto.AlimentoDTO;
@@ -28,6 +29,7 @@ import br.ufjf.ffapi.exception.RegraNegocioException;
 @RestController
 @RequestMapping("/api/v1/alimentos")
 @RequiredArgsConstructor
+@Api("API de Planos Dietéticos")
 @CrossOrigin
 public class AlimentoController {
 
@@ -39,6 +41,11 @@ public class AlimentoController {
         return ResponseEntity.ok(alimentos.stream().map(AlimentoDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de um alimento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Alimento encontrado"),
+            @ApiResponse(code = 404, message = "Alimento não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Alimento> alimento = service.getAlimentoById(id);
@@ -49,6 +56,11 @@ public class AlimentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo alimento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Alimento salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o alimento")
+    })
     public ResponseEntity post(@RequestBody AlimentoDTO dto) {
         try {
             Alimento alimento = converter(dto);
@@ -60,6 +72,11 @@ public class AlimentoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera um alimento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Alimento alterado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar o alimento")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlimentoDTO dto) {
         if (!service.getAlimentoById(id).isPresent()) {
             return new ResponseEntity("Alimento não encontrado", HttpStatus.NOT_FOUND);
@@ -75,6 +92,11 @@ public class AlimentoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um alimento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Alimento excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o alimento")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Alimento> alimento = service.getAlimentoById(id);
         if (!alimento.isPresent()) {

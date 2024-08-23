@@ -25,6 +25,9 @@ import br.ufjf.ffapi.api.dto.PessoaDTO;
 import br.ufjf.ffapi.exception.RegraNegocioException;
 import br.ufjf.ffapi.model.entity.Pessoa;
 import br.ufjf.ffapi.service.PessoaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v1/pessoas")
@@ -40,6 +43,11 @@ public class PessoaController {
         return ResponseEntity.ok(pessoas.stream().map(PessoaDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de uma pessoa")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Pessoa encontrada"),
+            @ApiResponse(code = 404, message = "Pessoa não encontrada")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Pessoa> pessoa = service.getPessoaById(id);
@@ -50,6 +58,11 @@ public class PessoaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova pessoa")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Pessoa salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a pessoa")
+    })
     public ResponseEntity post(@RequestBody PessoaDTO dto) {
         try {
             Pessoa pessoa = converter(dto);
@@ -61,6 +74,11 @@ public class PessoaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera uma pessoa")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Pessoa alterada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar a pessoa")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PessoaDTO dto) {
         if (!service.getPessoaById(id).isPresent()) {
             return new ResponseEntity("Pessoa não encontrada", HttpStatus.NOT_FOUND);
@@ -76,6 +94,11 @@ public class PessoaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma pessoa")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Pessoa excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a pessoa")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Pessoa> pessoa = service.getPessoaById(id);
         if (!pessoa.isPresent()) {

@@ -4,6 +4,9 @@ import br.ufjf.ffapi.api.dto.UsuarioDTO;
 import br.ufjf.ffapi.exception.RegraNegocioException;
 import br.ufjf.ffapi.model.entity.Usuario;
 import br.ufjf.ffapi.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
@@ -38,6 +41,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário encontrado"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = service.getUsuarioById(id);
@@ -48,6 +56,11 @@ public class UsuarioController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o usuário")
+    })
     public ResponseEntity post(@RequestBody UsuarioDTO dto) {
         try {
             Usuario usuario = converter(dto);
@@ -59,6 +72,11 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário alterado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar o usuário")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UsuarioDTO dto) {
         if (!service.getUsuarioById(id).isPresent()) {
             return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
@@ -74,6 +92,11 @@ public class UsuarioController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o usuário")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = service.getUsuarioById(id);
         if (!usuario.isPresent()) {

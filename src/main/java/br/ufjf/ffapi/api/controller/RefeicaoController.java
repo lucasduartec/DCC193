@@ -1,5 +1,8 @@
 package br.ufjf.ffapi.api.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
@@ -39,6 +42,11 @@ public class RefeicaoController {
         return ResponseEntity.ok(refeicoes.stream().map(RefeicaoDTO::create).collect(Collectors.toList()));
     }
 
+    @ApiOperation("Obter detalhes de uma refeição")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Refeição encontrado"),
+            @ApiResponse(code = 404, message = "Refeição não encontrada")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Refeicao> refeicao = service.getRefeicaoById(id);
@@ -49,6 +57,11 @@ public class RefeicaoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova refeição")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Refeição salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a refeição")
+    })
     public ResponseEntity post(@RequestBody RefeicaoDTO dto) {
         try {
             Refeicao refeicao = converter(dto);
@@ -60,6 +73,11 @@ public class RefeicaoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Altera uma refeição")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Refeição alterada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar a refeição")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody RefeicaoDTO dto) {
         if (!service.getRefeicaoById(id).isPresent()) {
             return new ResponseEntity("Refeição não encontrada", HttpStatus.NOT_FOUND);
@@ -75,6 +93,11 @@ public class RefeicaoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma refeição")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Refeição excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a refeição")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Refeicao> refeicao = service.getRefeicaoById(id);
         if (!refeicao.isPresent()) {
