@@ -20,7 +20,6 @@ public class UsuarioDTO {
     public static UsuarioDTO create(Usuario usuario){
         ModelMapper modelMapper = new ModelMapper();
         UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
-
         return dto;
     }
 }

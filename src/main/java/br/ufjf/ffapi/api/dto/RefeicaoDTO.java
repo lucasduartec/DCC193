@@ -19,8 +19,6 @@ public class RefeicaoDTO {
     public static RefeicaoDTO create(Refeicao refeicao){
         ModelMapper modelMapper = new ModelMapper();
         RefeicaoDTO dto = modelMapper.map(refeicao, RefeicaoDTO.class);
-        dto.nome = refeicao.getNome();
-        dto.horario = refeicao.getHorario();
         return dto;
     }
 }

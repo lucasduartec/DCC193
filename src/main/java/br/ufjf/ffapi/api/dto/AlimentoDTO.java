@@ -21,10 +21,6 @@ public class AlimentoDTO {
     public static AlimentoDTO create(Alimento alimento){
         ModelMapper modelMapper = new ModelMapper();
         AlimentoDTO dto = modelMapper.map(alimento, AlimentoDTO.class);
-        dto.nome = alimento.getNome();
-        dto.proteinas = alimento.getProteinas();
-        dto.carboidratos = alimento.getCarboidratos();
-        dto.gorduras = alimento.getGorduras();
         return dto;
     }
 }

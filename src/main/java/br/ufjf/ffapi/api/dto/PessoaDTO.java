@@ -20,10 +20,6 @@ public class PessoaDTO {
     public static PessoaDTO create(Pessoa pessoa){
         ModelMapper modelMapper = new ModelMapper();
         PessoaDTO dto = modelMapper.map(pessoa, PessoaDTO.class);
-        dto.nome = pessoa.getNome();
-        dto.idade = pessoa.getIdade();
-        dto.peso = pessoa.getPeso();
-        dto.altura = pessoa.getAltura();
         return dto;
     }
 }

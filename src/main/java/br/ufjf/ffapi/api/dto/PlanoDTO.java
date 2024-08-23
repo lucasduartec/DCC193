@@ -19,9 +19,6 @@ public class PlanoDTO {
     public static PlanoDTO create(Plano plano){
         ModelMapper modelMapper = new ModelMapper();
         PlanoDTO dto = modelMapper.map(plano, PlanoDTO.class);
-        dto.nome = plano.getNome();
-        dto.descricao = plano.getDescricao();
-        dto.metaCalorias = plano.getMetaCalorias();
         return dto;
     }
 }

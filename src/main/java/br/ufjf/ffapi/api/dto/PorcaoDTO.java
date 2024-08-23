@@ -19,7 +19,6 @@ public class PorcaoDTO {
     public static PorcaoDTO create(Porcao porcao){
         ModelMapper modelMapper = new ModelMapper();
         PorcaoDTO dto = modelMapper.map(porcao, PorcaoDTO.class);
-        dto.quantidade = porcao.getQuantidade();
         return dto;
     }
 }
