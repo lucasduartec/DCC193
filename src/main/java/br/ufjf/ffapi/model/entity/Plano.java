@@ -1,11 +1,11 @@
 package br.ufjf.ffapi.model.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +20,6 @@ public class Plano {
     private String nome;
     private String descricao;
     private int metaCalorias;
+    @ManyToMany
+    private List<Refeicao> refeicoes;
 }

@@ -15,7 +15,7 @@ public class Porcao {
     private Long id;
 
     private int quantidade;
-    @OneToOne
+    @ManyToOne
     private Alimento alimento;
     @ManyToOne
     private Refeicao refeicao;
