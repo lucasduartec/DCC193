@@ -49,7 +49,7 @@ public class UsuarioService {
         if (usuario.getSenha() == null || usuario.getSenha().trim().equals("")) {
             throw new RegraNegocioException("Senha inválida");
         }
-        if (!usuario.getAdmin()) {
+        if (!usuario.isAdmin()) {
             throw new RegraNegocioException("Admin inválido");
         }
     }

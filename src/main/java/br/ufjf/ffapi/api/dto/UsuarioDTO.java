@@ -15,6 +15,7 @@ public class UsuarioDTO {
     private String login;
     private String cpf;
     private String senha;
+    private String repeticaoSenha;
     private boolean admin;
 
     public static UsuarioDTO create(Usuario usuario){
