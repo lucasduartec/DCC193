@@ -6,6 +6,7 @@ import br.ufjf.ffapi.exception.SenhaInvalidaException;
 import br.ufjf.ffapi.model.entity.Usuario;
 import br.ufjf.ffapi.model.repository.UsuarioRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Service
 public class UsuarioService implements UserDetailsService {
 
+    @Autowired
     private PasswordEncoder encoder;
 
     private UsuarioRepository repository;
