@@ -16,11 +16,10 @@ public class Usuario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String login;
     private String cpf;
     private String senha;
     private boolean admin;
-
 }

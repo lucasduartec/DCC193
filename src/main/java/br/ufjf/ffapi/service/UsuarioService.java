@@ -33,7 +33,7 @@ public class UsuarioService implements UserDetailsService {
         return repository.findAll();
     }
 
-    public Optional<Usuario> getUsuarioById(Long id) {
+    public Optional<Usuario> getUsuarioById(Integer id) {
         return repository.findById(id);
     }
 
