@@ -1,8 +1,12 @@
 package br.ufjf.ffapi.api.controller;
 
+import br.ufjf.ffapi.api.dto.CredenciaisDTO;
+import br.ufjf.ffapi.api.dto.TokenDTO;
 import br.ufjf.ffapi.api.dto.UsuarioDTO;
 import br.ufjf.ffapi.exception.RegraNegocioException;
+import br.ufjf.ffapi.exception.SenhaInvalidaException;
 import br.ufjf.ffapi.model.entity.Usuario;
+import br.ufjf.ffapi.security.JwtService;
 import br.ufjf.ffapi.service.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,6 +31,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -34,6 +43,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class UsuarioController {
     private final UsuarioService service;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -114,5 +125,19 @@ public class UsuarioController {
         ModelMapper modelMapper = new ModelMapper();
         Usuario usuario = modelMapper.map(dto, Usuario.class);
         return usuario;
+    }
+
+    @PostMapping("/auth")
+    public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
+        try{
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
+            UserDetails usuarioAutenticado = service.autenticar(usuario);
+            String token = jwtService.gerarToken(usuario);
+            return new TokenDTO(usuario.getLogin(), token);
+        } catch (UsernameNotFoundException | SenhaInvalidaException e ){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -46,20 +47,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/alimentos/**")
-                .permitAll()
+                .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/planos/**")
-                .permitAll()
+                .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/porcoes/**")
-                .permitAll()
+                .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/refeicoes/**")
-                .permitAll()
+                .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/pessoas/**")
                 .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/v1/usuarios/**")
+                .antMatchers(HttpMethod.POST, "/api/v1/usuarios/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
