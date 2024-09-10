@@ -1,5 +1,6 @@
 package br.ufjf.ffapi.api.dto;
 
+import br.ufjf.ffapi.model.entity.Pessoa;
 import br.ufjf.ffapi.model.entity.Plano;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class PlanoDTO {
     private String nome;
     private String descricao;
     private int metaCalorias;
+    private Long idPessoa;
 
     public static PlanoDTO create(Plano plano){
         ModelMapper modelMapper = new ModelMapper();

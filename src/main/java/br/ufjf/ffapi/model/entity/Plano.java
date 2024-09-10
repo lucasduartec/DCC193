@@ -1,6 +1,8 @@
 package br.ufjf.ffapi.model.entity;
 
 import javax.persistence.*;
+
+import br.ufjf.ffapi.api.dto.PessoaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class Plano {
     private String nome;
     private String descricao;
     private int metaCalorias;
+    @ManyToOne
+    private Pessoa pessoa;
     @ManyToMany
     private List<Refeicao> refeicoes;
 }

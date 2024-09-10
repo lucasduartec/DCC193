@@ -47,6 +47,9 @@ public class PlanoService {
         }
         if (plano.getMetaCalorias() < 0 ) {
             throw new RegraNegocioException("Meta de calorias inválida");
-        }   
+        }
+        if (plano.getPessoa() == null || plano.getPessoa().getId() == null || plano.getPessoa().getId() == 0){
+            throw new RegraNegocioException("Pessoa invalida");
+        }
     }
 }
