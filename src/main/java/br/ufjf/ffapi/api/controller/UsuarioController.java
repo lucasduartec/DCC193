@@ -37,7 +37,7 @@ public class UsuarioController {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-
+    @ApiOperation("Obter todos os usuários")
     @GetMapping()
     public ResponseEntity get() {
         List<Usuario> usuarios = usuarioService.getUsuarios();
@@ -74,50 +74,52 @@ public class UsuarioController {
 //        }
 //    }
 
-//    @PutMapping("{id}")
-//    @ApiOperation("Altera um usuário")
-//    @ApiResponses({
-//            @ApiResponse(code = 201, message = "Usuário alterado com sucesso"),
-//            @ApiResponse(code = 400, message = "Erro ao alterar o usuário")
-//    })
-//    public ResponseEntity atualizar(@PathVariable("id") Integer id, @RequestBody UsuarioDTO dto) {
-//        if (!usuarioService.getUsuarioById(id).isPresent()) {
-//            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
-//        }
-//        try {
-//            Usuario usuario = converter(dto);
-//            usuario.setId(id);
-//            usuarioService.salvar(usuario);
-//            return ResponseEntity.ok(usuario);
-//        } catch (RegraNegocioException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-//
-//    @DeleteMapping("{id}")
-//    @ApiOperation("Exclui um usuário")
-//    @ApiResponses({
-//            @ApiResponse(code = 201, message = "Usuário excluído com sucesso"),
-//            @ApiResponse(code = 400, message = "Erro ao excluir o usuário")
-//    })
-//    public ResponseEntity excluir(@PathVariable("id") Integer id) {
-//        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
-//        if (!usuario.isPresent()) {
-//            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
-//        }
-//        try {
-//            usuarioService.excluir(usuario.get());
-//            return new ResponseEntity(HttpStatus.NO_CONTENT);
-//        } catch (RegraNegocioException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-//
-//    public Usuario converter(UsuarioDTO dto) {
-//        ModelMapper modelMapper = new ModelMapper();
-//        Usuario usuario = modelMapper.map(dto, Usuario.class);
-//        return usuario;
-//    }
+    @PutMapping("{id}")
+    @ApiOperation("Altera um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário alterado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao alterar o usuário")
+    })
+    public ResponseEntity atualizar(@PathVariable("id") Integer id, @RequestBody UsuarioDTO dto) {
+        if (!usuarioService.getUsuarioById(id).isPresent()) {
+            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Usuario usuario = converter(dto);
+            usuario.setId(id);
+            String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+            usuario.setSenha(senhaCriptografada);
+            usuarioService.salvar(usuario);
+            return ResponseEntity.ok(usuario);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    @ApiOperation("Exclui um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o usuário")
+    })
+    public ResponseEntity excluir(@PathVariable("id") Integer id) {
+        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
+        if (!usuario.isPresent()) {
+            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            usuarioService.excluir(usuario.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Usuario converter(UsuarioDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Usuario usuario = modelMapper.map(dto, Usuario.class);
+        return usuario;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
